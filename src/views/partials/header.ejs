@@ -11,10 +11,25 @@
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/organizations">Organizations</a></li>
-            <li><a href="/projects">Projects</a></li>
-        </ul>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <nav aria-label="Main navigation">
+        <div class="nav-container">
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false"
+                aria-controls="nav-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a class="nav-brand" href="/">
+                <!-- <img src="/images/cse340-service-network.png" alt="" class="nav-brand-logo"> -->
+                CSE 340 Service Network
+            </a>
+            <ul id="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/organizations">Organizations</a></li>
+                <li><a href="/projects">Projects</a></li>
+                <li><a href="/categories">Categories</a></li>
+            </ul>
+        </div>
     </nav>
+    <script type="module" src="/js/nav.js"></script>
