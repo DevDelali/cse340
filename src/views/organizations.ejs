@@ -5,21 +5,17 @@
                 </h1>
                 <p>Here are a few of our partner organizations:</p>
                 <ul class="card-grid">
-                        <li class="card">
-                                <img src="/images/brightfuture-logo.png" alt="BrightFuture Builders logo">
-                                <h3>BrightFuture Builders</h3>
-                                <p class="card-contact">info@brightfuture.org</p>
-                        </li>
-                        <li class="card">
-                                <img src="/images/greenharvest-logo.png" alt="GreenHarvest Growers logo">
-                                <h3>GreenHarvest Growers</h3>
-                                <p class="card-contact">contact@greenharvest.org</p>
-                        </li>
-                        <li class="card">
-                                <img src="/images/unityserve-logo.png" alt="UnityServe Volunteers logo">
-                                <h3>UnityServe Volunteers</h3>
-                                <p class="card-contact">hello@unityserve.org</p>
-                        </li>
+                        <% organizations.forEach(org=> { %>
+                                <li class="card">
+                                        <img src="/images/<%= org.logo_filename %>" alt="<%= org.name %> logo">
+                                        <h3>
+                                                <%= org.name %>
+                                        </h3>
+                                        <p class="card-contact">
+                                                <%= org.contact %>
+                                        </p>
+                                </li>
+                                <% }) %>
                 </ul>
         </main>
         <%- include('partials/footer') %>
