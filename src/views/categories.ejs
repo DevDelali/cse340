@@ -4,11 +4,11 @@
             <%= title %>
         </h1>
         <ul class="card-grid categories">
-            <li class="card">Environmental Conservation</li>
-            <li class="card">Education and Tutoring</li>
-            <li class="card">Food and Hunger Relief</li>
-            <li class="card">Healthcare and Wellness</li>
-            <li class="card">Community Development</li>
+            <% categories.forEach(function(category) { %>
+                <li class="card">
+                    <%= category.name %>
+                </li>
+                <% }); %>
         </ul>
     </main>
     <%- include('partials/footer') %>

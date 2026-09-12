@@ -49,8 +49,8 @@ VALUES
     (3, 'Wellness Workshop', 'Assist in hosting a workshop on nutrition and wellness.', 'Public Library', '2026-11-18'),
     (3, 'Holiday Meal Distribution', 'Prepare and distribute holiday meals to families.', 'St. Andrew Community Kitchen', '2026-12-19');
 
-    -- Verify the inserted data
-    SELECT
+-- Verify the inserted data
+SELECT
     sp.project_id,
     sp.title,
     sp.project_date,
@@ -58,3 +58,56 @@ VALUES
 FROM service_projects sp
 JOIN organization o ON sp.organization_id = o.organization_id
 ORDER BY sp.project_date;
+
+--Table for storing categories
+CREATE TABLE categories (
+    category_id SERIAL PRIMARY KEY,
+    name        VARCHAR(100) NOT NULL UNIQUE
+);
+
+-- Joining table for projects and categories
+CREATE TABLE project_categories (
+    project_id  INTEGER NOT NULL
+        REFERENCES service_projects(project_id)
+        ON DELETE CASCADE,
+    category_id INTEGER NOT NULL
+        REFERENCES categories(category_id)
+        ON DELETE CASCADE,
+    PRIMARY KEY (project_id, category_id)
+);
+
+-- Insert sample categories into the categories table
+INSERT INTO categories (name) VALUES
+    ('Environmental Conservation'),
+    ('Education and Tutoring'),
+    ('Food and Hunger Relief'),
+    ('Healthcare and Wellness'),
+    ('Community Development');
+
+--Inserting sample data into the project_categories table to associate projects with categories
+INSERT INTO project_categories (project_id, category_id) VALUES
+    (1, 1),  -- Park Cleanup -> Environmental Conservation
+    (2, 3),  -- Food Drive -> Food and Hunger Relief
+    (3, 2),  -- Community Tutoring -> Education and Tutoring
+    (4, 1),  -- Trail Restoration -> Environmental Conservation
+    (5, 3),  -- Winter Coat Drive -> Food and Hunger Relief
+    (6, 1),  -- Beach Cleanup -> Environmental Conservation
+    (7, 1),  -- Tree Planting Day -> Environmental Conservation
+    (8, 1),  -- Recycling Awareness Booth -> Environmental Conservation
+    (9, 5),  -- Community Garden Build -> Community Development
+    (10, 1), -- River Cleanup -> Environmental Conservation
+    (11, 4), -- Senior Center Visit Day -> Healthcare and Wellness
+    (12, 4), -- Health Screening Event -> Healthcare and Wellness
+    (13, 4), -- Blood Drive -> Healthcare and Wellness
+    (14, 4), -- Wellness Workshop -> Healthcare and Wellness
+    (15, 3); -- Holiday Meal Distribution -> Food and Hunger Relief
+
+-- Verify the inserted data in the project_categories table
+SELECT
+    sp.title,
+    STRING_AGG(c.name, ', ') AS categories
+FROM service_projects sp
+JOIN project_categories pc ON sp.project_id = pc.project_id
+JOIN categories c ON pc.category_id = c.category_id
+GROUP BY sp.project_id, sp.title
+ORDER BY sp.title;
