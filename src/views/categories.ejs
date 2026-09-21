@@ -6,7 +6,9 @@
         <ul class="card-grid categories">
             <% categories.forEach(function(category) { %>
                 <li class="card">
-                    <%= category.name %>
+                    <a href="/category/<%= category.category_id %>">
+                        <%= category.name %>
+                    </a>
                 </li>
                 <% }); %>
         </ul>

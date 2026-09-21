@@ -7,17 +7,31 @@
         <p><strong>Description:</strong>
             <%= project.description %>
         </p>
+
         <p><strong>Date:</strong>
             <%= new Date(project.date).toLocaleDateString('en-US', { month: 'long' , day: 'numeric' , year: 'numeric' ,
                 timeZone: 'UTC' }) %>
         </p>
+
         <p><strong>Location:</strong>
             <%= project.location %>
         </p>
+
         <p><strong>Organization:</strong>
             <a href="/organization/<%= project.organization_id %>">
                 <%= project.organization_name %>
             </a>
         </p>
+
+        <% if (categories && categories.length) { %>
+            <p><strong>Categories:</strong>
+                <% categories.forEach((category, index)=> { %>
+                    <a href="/category/<%= category.category_id %>">
+                        <%= category.name %>
+                    </a>
+                    <%= index < categories.length - 1 ? ', ' : '' %>
+                        <% }) %>
+            </p>
+            <% } %>
     </main>
     <%- include('partials/footer') %>
