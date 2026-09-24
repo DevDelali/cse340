@@ -38,9 +38,18 @@ const showNewOrganizationForm = async (req, res) => {
 
 const processNewOrganizationForm = async (req, res) => {
     const { name, description, contactEmail } = req.body;
-    const logoFilename = 'placeholder-logo.png';
 
-    const organizationId = await createOrganization(name, description, contactEmail, logoFilename);
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(contactEmail.trim())) {
+        req.flash('error', 'Please enter a valid email address.');
+        return res.redirect('/new-organization');
+    }
+
+    const logoFilename = 'placeholder-logo.png';
+    const organizationId = await createOrganization(name, description, contactEmail.trim(), logoFilename);
+
+    req.flash('success', 'Organization added successfully!');
     res.redirect(`/organization/${organizationId}`);
 };
 
