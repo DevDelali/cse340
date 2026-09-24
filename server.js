@@ -42,6 +42,10 @@ app.use((req, res, next) => {
     next();
 });
 
+// Middleware to parse URL-encoded and JSON data
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 /**
  * Routes - moved to src/routes.js for better organization
  */

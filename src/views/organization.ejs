@@ -1,27 +1,59 @@
 <%- include('partials/header') %>
-    <main id="main-content" tabindex="-1">
-        <h1><%= organization.name %></h1>
+    <main id="main-content" tabindex="-1" class="organization-page">
+        <section class="organization-shell">
+            <div class="organization-header">
+                <span class="organization-badge">Organization</span>
+                <h1>
+                    <%= organization.name %>
+                </h1>
+            </div>
 
-        <img src="/images/<%= organization.logo_filename %>"
-             alt="<%= organization.name %> logo">
+            <div class="organization-card">
+                <div class="organization-card__media">
+                    <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+                </div>
 
-        <p><%= organization.description %></p>
-        <p><%= organization.contact_email %></p>
+                <div class="organization-card__body">
+                    <h2>Organization Details</h2>
+                    <p class="organization-description">
+                        <%= organization.description %>
+                    </p>
 
-        <h2>Service Projects</h2>
-
-        <% if (projects.length) { %>
-            <ul class="project-list">
-                <% projects.forEach(project => { %>
-                    <li>
-                        <a href="/project/<%= project.project_id %>">
-                            <%= project.title %>
+                    <div class="organization-meta">
+                        <span class="meta-label">Contact</span>
+                        <a href="mailto:<%= organization.contact_email %>">
+                            <%= organization.contact_email %>
                         </a>
-                    </li>
-                <% }) %>
-            </ul>
-        <% } else { %>
-            <p>No projects are available for this organization.</p>
-        <% } %>
+                    </div>
+
+                    <div class="organization-actions">
+                        <a class="btn btn-primary" href="/new-organization" aria-label="Go to the forms page">
+                            <span aria-hidden="true">→</span>
+                            Go to Forms Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="organization-projects">
+                <div class="section-heading">
+                    <h2>Service Projects</h2>
+                </div>
+
+                <% if (projects.length) { %>
+                    <ul class="project-list">
+                        <% projects.forEach(project=> { %>
+                            <li>
+                                <a href="/project/<%= project.project_id %>">
+                                    <%= project.title %>
+                                </a>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } else { %>
+                        <p>No projects are available for this organization.</p>
+                        <% } %>
+            </div>
+        </section>
     </main>
-<%- include('partials/footer') %>
+    <%- include('partials/footer') %>
