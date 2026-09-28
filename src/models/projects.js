@@ -23,7 +23,7 @@ const getUpcomingProjects = async (number_of_projects) => {
             sp.project_id,
             sp.title,
             sp.description,
-            sp.project_date AS date,
+            TO_CHAR(sp.project_date, 'YYYY-MM-DD') AS date,
             sp.location,
             org.organization_id,
             org.name AS organization_name
@@ -57,6 +57,7 @@ const getProjectDetails = async (id) => {
 
     return result.rows[0];
 };
+
 const createProject = async (title, description, location, date, organizationId) => {
     const query = `
       INSERT INTO service_projects
@@ -77,9 +78,37 @@ const createProject = async (title, description, location, date, organizationId)
     }
 
     return result.rows[0].project_id;
-}
+};
+
+const updateProject = async (projectId, title, description, location, date, organizationId) => {
+    const query = `
+        UPDATE service_projects
+        SET title = $1,
+            description = $2,
+            location = $3,
+            project_date = $4,
+            organization_id = $5
+        WHERE project_id = $6
+        RETURNING project_id;
+    `;
+
+    const result = await db.query(query, [
+        title,
+        description,
+        location,
+        date,
+        organizationId,
+        projectId
+    ]);
+
+    if (result.rows.length === 0) {
+        throw new Error('Project not found');
+    }
+
+    return result.rows[0].project_id;
+};
 
 export {
     getAllProjects, getUpcomingProjects, getProjectDetails,
-    createProject
+    createProject, updateProject
 };

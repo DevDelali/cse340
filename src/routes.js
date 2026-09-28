@@ -15,7 +15,9 @@ import {
     projectDetailsPage,
     showNewProjectForm,
     processNewProjectForm,
-    projectValidation
+    projectValidation,
+    showEditProjectForm,
+    processEditProjectForm
 } from './controllers/projects.js';
 import { categoriesPage, categoryDetailsPage } from './controllers/categories.js';
 import { testErrorPage } from './controllers/errors.js';
@@ -43,5 +45,8 @@ router.get('/project/:id', projectDetailsPage);
 router.get('/categories', categoriesPage);
 router.get('/category/:id', categoryDetailsPage);
 router.get('/test-error', testErrorPage);
+
+router.get('/edit-project/:id', showEditProjectForm);
+router.post('/edit-project/:id', projectValidation, processEditProjectForm);
 
 export default router;

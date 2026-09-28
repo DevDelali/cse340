@@ -76,10 +76,61 @@ const createOrganization = async (name, description, contactEmail, logoFilename)
   return result.rows[0].organization_id;
 };
 
+const showEditProjectForm = async (req, res, next) => {
+  try {
+    const project = await getProjectDetails(req.params.id);
+
+    if (!project) {
+      const error = new Error('Project not found');
+      error.status = 404;
+      return next(error);
+    }
+
+    const organizations = await getAllOrganizations();
+
+    res.render('update-project', {
+      title: 'Edit Service Project',
+      project,
+      organizations
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const processEditProjectForm = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    errors.array().forEach(error => req.flash('error', error.msg));
+    return res.redirect(`/edit-project/${req.params.id}`);
+  }
+
+  try {
+    const { title, description, location, date, organizationId } = req.body;
+
+    const projectId = await updateProject(
+      req.params.id,
+      title,
+      description,
+      location,
+      date,
+      organizationId
+    );
+
+    req.flash('success', 'Project updated successfully.');
+    res.redirect(`/project/${projectId}`);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export {
   getAllOrganizations,
   getOrganizationById,
   getProjectsByOrganization,
   createOrganization,
-  updateOrganization
+  updateOrganization,
+  showEditProjectForm,
+  processEditProjectForm
 };
