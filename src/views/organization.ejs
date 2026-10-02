@@ -27,13 +27,15 @@
                     </div>
 
                     <div class="organization-actions">
-                        <a class="btn btn-primary" href="/new-organization" aria-label="Go to the forms page">
-                            <span aria-hidden="true">→</span>
-                            Go to Forms Page
-                        </a>
-                        <a class="btn btn-primary" href="/edit-organization/<%= organization.organization_id %>">
-                            Edit Organization
-                        </a>
+                        <% if (user && user.role_name==='admin' ) { %>
+                            <a class="btn btn-primary" href="/new-organization" aria-label="Go to the forms page">
+                                <span aria-hidden="true">→</span>
+                                Go to Forms Page
+                            </a>
+                            <a class="btn btn-primary" href="/edit-organization/<%= organization.organization_id %>">
+                                Edit Organization
+                            </a>
+                            <% } %>
                     </div>
                 </div>
             </div>

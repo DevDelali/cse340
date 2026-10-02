@@ -915,3 +915,25 @@ form {
     background-color: var(--color-bg);
     text-decoration: underline;
 }
+
+.form-group input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    margin: 0;
+    flex: 0 0 auto;
+    accent-color: var(--color-primary);
+}
+
+.category-option {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.65rem;
+}
+
+.category-option label {
+    color: var(--color-text);
+    font-weight: 500;
+    cursor: pointer;
+}

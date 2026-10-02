@@ -4,23 +4,20 @@
             <%= title %>
         </h1>
 
-        <p>
-            <a class="btn btn-primary" href="/new-category">Create Category</a>
-        </p>
+        <% if (user && user.role_name==='admin' ) { %>
+            <p>
+                <a class="btn btn-primary" href="/new-category">Create Category</a>
+            </p>
+            <% } %>
 
-        <ul class="card-grid categories">
-            <% categories.forEach(category=> { %>
-                <li class="card category-card">
-                    <a class="category-card__name" href="/category/<%= category.category_id %>">
-                        <%= category.name %>
-                    </a>
-                    <div class="category-card__actions">
-                        <a class="category-card__edit" href="/edit-category/<%= category.category_id %>">
-                            Edit category
-                        </a>
-                    </div>
-                </li>
-                <% }); %>
-        </ul>
+                <ul class="card-grid categories">
+                    <% categories.forEach(category=> { %>
+                        <li class="card category-card">
+                            <a class="category-card__name" href="/category/<%= category.category_id %>">
+                                <%= category.name %>
+                            </a>
+                        </li>
+                        <% }); %>
+                </ul>
     </main>
     <%- include('partials/footer') %>
