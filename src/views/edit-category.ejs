@@ -1,10 +1,10 @@
 <%- include('partials/header') %>
-    <main id="main-content" tabindex="-1">
-        <h1>
-            <%= title %>
-        </h1>
+    <main id="main-content" tabindex="-1" class="form-page">
+        <section class="form-card">
+            <p class="section-kicker">Category management</p>
+            <h1><%= title %></h1>
 
-        <form action="/edit-category/<%= category.category_id %>" method="POST">
+            <form action="/edit-category/<%= category.category_id %>" method="POST">
             <div class="form-group">
                 <label for="name">Category Name</label>
                 <input type="text" id="name" name="name" value="<%= category.name %>" minlength="3" maxlength="100"
@@ -12,6 +12,7 @@
             </div>
 
             <button class="btn btn-primary" type="submit">Update Category</button>
-        </form>
+            </form>
+        </section>
     </main>
     <%- include('partials/footer') %>

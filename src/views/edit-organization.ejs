@@ -1,10 +1,10 @@
 <%- include('partials/header') %>
-    <main>
-        <h1>
-            <%= title %>
-        </h1>
+    <main id="main-content" tabindex="-1" class="form-page">
+        <section class="form-card">
+            <p class="section-kicker">Organization management</p>
+            <h1><%= title %></h1>
 
-        <form action="/edit-organization/<%= organizationDetails.organization_id %>" method="POST">
+            <form action="/edit-organization/<%= organizationDetails.organization_id %>" method="POST">
             <div class="form-group">
                 <label for="name">Organization Name</label>
                 <input type="text" id="name" name="name" value="<%= organizationDetails.name %>" maxlength="150"
@@ -31,7 +31,8 @@
 
 
             <button type="submit">Update Organization</button>
-        </form>
+            </form>
+        </section>
 
     </main>
     <%- include('partials/footer') %>

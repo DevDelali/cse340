@@ -1,9 +1,17 @@
 <%- include('partials/header') %>
-        <main id="main-content" tabindex="-1">
+        <main id="main-content" tabindex="-1" class="listing-page">
+                <header class="page-heading">
+                        <div>
+                <p class="section-kicker">Our community partners</p>
                 <h1>
                         <%= title %>
                 </h1>
-                <p>Here are a few of our partner organizations:</p>
+                <p>Meet the organizations making a difference in our communities.</p>
+                        </div>
+                        <% if (user && user.role_name==='admin' ) { %>
+                <a href="/new-organization" class="btn btn-primary">Add organization</a>
+                        <% } %>
+                </header>
                 <ul class="card-grid">
                         <% organizations.forEach(org=> { %>
                                 <li class="card">
@@ -20,10 +28,5 @@
                                 <% }) %>
                 </ul>
 
-                <% if (user && user.role_name==='admin' ) { %>
-                        <p>
-                                <a href="/new-organization" class="add-org-link">Add a new organization</a>
-                        </p>
-                        <% } %>
         </main>
         <%- include('partials/footer') %>

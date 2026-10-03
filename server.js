@@ -1,10 +1,14 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { testConnection } from './src/models/db.js';
+import { ensureAdminUser } from './src/models/users.js';
 import router from './src/routes.js';
 import session from 'express-session';
 import flash from './src/middleware/flash.js';
+
+dotenv.config();
 
 
 // Define the application environment
@@ -112,6 +116,7 @@ app.use((err, req, res, next) => {
 app.listen(PORT, async () => {
     try {
         await testConnection();
+        await ensureAdminUser();
         console.log(`Server is running at http://127.0.0.1:${PORT}`);
         console.log(`Environment: ${NODE_ENV}`);
     } catch (error) {

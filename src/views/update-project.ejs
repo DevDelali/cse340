@@ -1,6 +1,8 @@
 <%- include('partials/header') %>
-<main>
-    <h1><%= title %></h1>
+<main id="main-content" tabindex="-1" class="form-page">
+    <section class="form-card">
+        <p class="section-kicker">Project management</p>
+        <h1><%= title %></h1>
 
     <form action="/edit-project/<%= project.project_id %>" method="POST">
         <div class="form-group">
@@ -37,5 +39,6 @@
 
         <button class="btn btn-primary" type="submit">Update Project</button>
     </form>
+    </section>
 </main>
 <%- include('partials/footer') %>

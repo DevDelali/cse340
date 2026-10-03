@@ -137,6 +137,13 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Insert the admin testing account required for this assignment
+INSERT INTO users (name, email, password_hash, role_id)
+SELECT 'Admin User', 'admin@example.com', '$2b$10$nszqGowA9ptuCP5y8z.8vOATwkFIosOZxFMDbaMd3UBtInsFp53PG', role_id
+FROM roles
+WHERE role_name = 'admin'
+ON CONFLICT (email) DO NOTHING;
+
 -- Insert a test user
 INSERT INTO users (name, email, password_hash, role_id) 
 VALUES ('testuser', 'test@example.com', 'placeholder_hash', 1);

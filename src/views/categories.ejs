@@ -1,16 +1,16 @@
 <%- include('partials/header') %>
-    <main id="main-content" tabindex="-1">
-        <h1>
-            <%= title %>
-        </h1>
-
-        <% if (user && user.role_name==='admin' ) { %>
-            <p>
-                <a class="btn btn-primary" href="/new-category">Create Category</a>
-            </p>
+    <main id="main-content" tabindex="-1" class="listing-page">
+        <header class="page-heading">
+            <div>
+                <p class="section-kicker">Browse by interest</p>
+                <h1><%= title %></h1>
+                <p>Explore service opportunities by the causes and communities they support.</p>
+            </div>
+            <% if (user && user.role_name==='admin' ) { %>
+                <a class="btn btn-primary" href="/new-category">Create category</a>
             <% } %>
-
-                <ul class="card-grid categories">
+        </header>
+        <ul class="card-grid categories">
                     <% categories.forEach(category=> { %>
                         <li class="card category-card">
                             <a class="category-card__name" href="/category/<%= category.category_id %>">

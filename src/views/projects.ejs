@@ -1,45 +1,42 @@
 <%- include('partials/header') %>
-    <main id="main-content" tabindex="-1">
-        <h1>
-            <%= title %>
-        </h1>
-
-        <ul class="project-list">
+    <main id="main-content" tabindex="-1" class="listing-page">
+        <header class="page-heading">
+            <div>
+                <p class="section-kicker">Find your next opportunity</p>
+                <h1><%= title %></h1>
+                <p>Discover local service projects and ways to get involved.</p>
+            </div>
+            <% if (user && user.role_name==='admin' ) { %>
+                <a class="btn btn-primary" href="/new-project">Add a service project</a>
+            <% } %>
+        </header>
+        <ul class="project-list project-list--cards">
             <% if (projects.length) { %>
                 <% projects.forEach(project=> { %>
-                    <li>
-                        <strong>
-                            <a href="/project/<%= project.project_id %>">
+                    <li class="project-listing-card">
+                        <a class="project-listing-card__title" href="/project/<%= project.project_id %>">
                                 <%= project.title %>
-                            </a>
-                        </strong>
-                        <p>
-                            Organized by:
+                        </a>
+                        <p class="project-listing-card__organization">
+                            Hosted by
                             <a href="/organization/<%= project.organization_id %>">
                                 <%= project.organization_name %>
                             </a>
                         </p>
-                        <p>
+                        <p class="project-listing-card__meta">
+                            <span aria-hidden="true">📅</span>
                             <%= new Date(project.date).toLocaleDateString('en-US', { month: 'long' , day: 'numeric' ,
                                 year: 'numeric' , timeZone: 'UTC' }) %>
                         </p>
-                        <p>
+                        <p class="project-listing-card__meta">
+                            <span aria-hidden="true">📍</span>
                             <%= project.location %>
                         </p>
                     </li>
                     <% }) %>
                         <% } else { %>
-                            <li>No upcoming service projects are available.</li>
+                            <li class="project-listing-empty">No upcoming service projects are available.</li>
                             <% } %>
         </ul>
-        <% if (user && user.role_name==='admin' ) { %>
-            <div>
-                <p>
-                    <a class="btn btn-primary" href="/new-project">
-                        Add a New Service Project
-                    </a>
-                </p>
-            </div>
-            <% } %>
     </main>
     <%- include('partials/footer') %>

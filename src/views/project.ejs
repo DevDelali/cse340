@@ -1,50 +1,49 @@
 <%- include('partials/header') %>
-    <main id="main-content" tabindex="-1">
-        <h1>
-            <%= project.title %>
-        </h1>
+    <main id="main-content" tabindex="-1" class="project-detail-page">
+        <article class="project-detail-card">
+            <header class="project-detail-header">
+                <span class="organization-badge">Service opportunity</span>
+                <h1><%= project.title %></h1>
+                <p>Hosted by <a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a></p>
+            </header>
 
-        <p><strong>Description:</strong>
-            <%= project.description %>
-        </p>
+            <section class="project-detail-description">
+                <h2>About this project</h2>
+                <p><%= project.description %></p>
+            </section>
 
-        <p><strong>Date:</strong>
-            <%= new Date(project.date).toLocaleDateString('en-US', { month: 'long' , day: 'numeric' , year: 'numeric' ,
-                timeZone: 'UTC' }) %>
-        </p>
+            <dl class="project-detail-meta">
+                <div>
+                    <dt>Date</dt>
+                    <dd><%= new Date(project.date).toLocaleDateString('en-US', { month: 'long' , day: 'numeric' , year: 'numeric' , timeZone: 'UTC' }) %></dd>
+                </div>
+                <div>
+                    <dt>Location</dt>
+                    <dd><%= project.location %></dd>
+                </div>
+                <div>
+                    <dt>Organization</dt>
+                    <dd><a href="/organization/<%= project.organization_id %>"><%= project.organization_name %></a></dd>
+                </div>
+            </dl>
 
-        <p><strong>Location:</strong>
-            <%= project.location %>
-        </p>
-
-        <p><strong>Organization:</strong>
-            <a href="/organization/<%= project.organization_id %>">
-                <%= project.organization_name %>
-            </a>
-        </p>
-
-        <% if (categories && categories.length) { %>
-            <p><strong>Categories:</strong>
-                <% categories.forEach((category, index)=> { %>
-                    <a href="/category/<%= category.category_id %>">
-                        <%= category.name %>
-                    </a>
-                    <%= index < categories.length - 1 ? ', ' : '' %>
+            <% if (categories && categories.length) { %>
+                <section class="project-detail-categories">
+                    <h2>Categories</h2>
+                    <ul class="tag-list">
+                        <% categories.forEach(category => { %>
+                            <li><a href="/category/<%= category.category_id %>"><%= category.name %></a></li>
                         <% }) %>
-            </p>
+                    </ul>
+                </section>
             <% } %>
-                <% if (user && user.role_name==='admin' ) { %>
-                    <div>
-                        <p>
-                            <a class="btn btn-primary" href="/assign-categories/<%= project.project_id %>">Edit
-                                Categories</a>
-                        </p>
-                    </div>
 
-                    <p>
-                        <a class="btn btn-primary" href="/edit-project/<%= project.project_id %>">Edit Project</a>
-                    </p>
-                    <% } %>
-
+            <% if (user && user.role_name==='admin' ) { %>
+                <div class="project-detail-actions">
+                    <a class="btn btn-secondary" href="/assign-categories/<%= project.project_id %>">Edit categories</a>
+                    <a class="btn btn-primary" href="/edit-project/<%= project.project_id %>">Edit project</a>
+                </div>
+            <% } %>
+        </article>
     </main>
     <%- include('partials/footer') %>

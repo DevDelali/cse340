@@ -1,10 +1,10 @@
 <%- include('partials/header') %>
-    <main>
-        <h1>
-            <%= title %>
-        </h1>
-
-        <form action="/register" method="POST">
+    <main id="main-content" tabindex="-1" class="form-page">
+        <section class="form-card">
+            <p class="section-kicker">Join the community</p>
+            <h1><%= title %></h1>
+            <p class="form-intro">Create an account to connect with local service opportunities.</p>
+            <form action="/register" method="POST">
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" id="name" name="name" required />
@@ -21,7 +21,9 @@
             </div>
 
             <button type="submit">Register</button>
-        </form>
+            </form>
+            <p class="form-footnote">Already registered? <a href="/login">Sign in</a>.</p>
+        </section>
 
     </main>
     <%- include('partials/footer') %>

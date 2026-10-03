@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import db from './db.js'
+import db from './db.js';
 
 const createUser = async (name, email, passwordHash) => {
     const default_role = 'user';
@@ -21,6 +21,18 @@ const createUser = async (name, email, passwordHash) => {
     }
 
     return result.rows[0].user_id;
+};
+
+const getAllUsers = async () => {
+    const query = `
+        SELECT u.user_id, u.name, u.email, r.role_name
+        FROM users u
+        JOIN roles r ON u.role_id = r.role_id
+        ORDER BY u.name ASC
+    `;
+
+    const result = await db.query(query);
+    return result.rows;
 };
 
 const findUserByEmail = async (email) => {
@@ -53,4 +65,24 @@ const authenticateUser = async (email, password) => {
     return authenticatedUser;
 };
 
-export { createUser, findUserByEmail, verifyPassword, authenticateUser };
+const ensureAdminUser = async () => {
+    const adminEmail = 'admin@example.com';
+    const adminPasswordHash = await bcrypt.hash('cse340!', 10);
+    const query = `
+        INSERT INTO users (name, email, password_hash, role_id)
+        SELECT 'Admin User', $1, $2, role_id
+        FROM roles
+        WHERE role_name = 'admin'
+        ON CONFLICT (email) DO NOTHING
+    `;
+
+    const result = await db.query(query, [adminEmail, adminPasswordHash]);
+
+    if (result.rowCount > 0 && process.env.ENABLE_SQL_LOGGING === 'true') {
+        console.log('Created default admin account for admin@example.com');
+    }
+
+    return result.rowCount;
+};
+
+export { createUser, getAllUsers, findUserByEmail, verifyPassword, authenticateUser, ensureAdminUser };

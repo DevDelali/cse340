@@ -1,10 +1,10 @@
 <%- include('partials/header') %>
-    <main>
-        <h1>
-            <%= title %>
-        </h1>
+    <main id="main-content" tabindex="-1" class="form-page">
+        <section class="form-card">
+            <p class="section-kicker">Project management</p>
+            <h1><%= title %></h1>
 
-        <form action="/new-project" method="POST">
+            <form action="/new-project" method="POST">
             <div class="form-group">
                 <label for="title">Project Title*</label>
                 <input type="text" id="title" name="title" maxlength="150" required />
@@ -37,7 +37,8 @@
                 </select>
             </div>
 
-            <button type="submit">Create Project</button>
-
+            <button class="btn btn-primary" type="submit">Create project</button>
+            </form>
+        </section>
     </main>
     <%- include('partials/footer') %>

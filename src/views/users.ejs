@@ -1,0 +1,54 @@
+<%- include('partials/header') %>
+
+<main id="main-content" class="users-page" tabindex="-1">
+    <section class="users-shell">
+        <header class="users-header">
+            <div>
+                <p class="section-kicker">Administrative Access</p>
+                <h1><%= title %></h1>
+            </div>
+            <div class="users-summary" aria-label="User summary">
+                <span class="users-summary__label">Registered users</span>
+                <strong><%= users && users.length ? users.length : 0 %></strong>
+            </div>
+        </header>
+
+        <% if (users && users.length) { %>
+            <div class="users-panel">
+                <div class="users-panel__header">
+                    <h2>All system users</h2>
+                </div>
+                <div class="table-wrap">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach(userEntry => { %>
+                                <tr>
+                                    <td class="user-name"><%= userEntry.name %></td>
+                                    <td><a href="mailto:<%= userEntry.email %>"><%= userEntry.email %></a></td>
+                                    <td>
+                                        <span class="user-role <%= userEntry.role_name === 'admin' ? 'user-role--admin' : 'user-role--member' %>">
+                                            <%= userEntry.role_name %>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        <% } else { %>
+            <div class="users-panel users-panel--empty">
+                <p>No users found.</p>
+            </div>
+        <% } %>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

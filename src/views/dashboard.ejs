@@ -1,16 +1,71 @@
 <%- include('partials/header') %>
 
-    <main>
-        <h1>
-            <%= title %>
-        </h1>
+<main class="dashboard-page" id="main-content" tabindex="-1">
+    <section class="dashboard-shell">
+        <header class="dashboard-header">
+            <div>
+                <p class="section-kicker">Welcome back</p>
+                <h1><%= title %></h1>
+            </div>
+            <div class="dashboard-role-badge">
+                <span>Role</span>
+                <strong><%= user && user.role_name ? user.role_name : 'member' %></strong>
+            </div>
+        </header>
 
-        <h2>Dashboard</h2>
-        <p>Name: <%= name %>
-        </p>
-        <p>Username: <%= email %>
-        </p>
+        <section class="dashboard-overview">
+            <div class="profile-card">
+                <div class="profile-card__icon" aria-hidden="true">👤</div>
+                <div>
+                    <p class="profile-label">Account</p>
+                    <h2><%= name %></h2>
+                    <p><%= email %></p>
+                </div>
+            </div>
 
-    </main>
+            <div class="stats-grid">
+                <article class="stat-card stat-card--primary">
+                    <span class="stat-card__label">Access Level</span>
+                    <strong><%= user && user.role_name === 'admin' ? 'Administrator' : 'Standard User' %></strong>
+                </article>
+                <article class="stat-card">
+                    <span class="stat-card__label">Status</span>
+                    <strong>Active</strong>
+                </article>
+            </div>
+        </section>
 
-    <%- include('partials/footer') %>
+        <section class="dashboard-actions" aria-label="Dashboard actions">
+            <h2>Quick Actions</h2>
+            <div class="action-grid">
+                <a href="/organizations" class="action-card">
+                    <span class="action-card__icon">🏢</span>
+                    <span>
+                        <strong>Organizations</strong>
+                        <small>View partner organizations</small>
+                    </span>
+                </a>
+
+                <a href="/projects" class="action-card">
+                    <span class="action-card__icon">📁</span>
+                    <span>
+                        <strong>Projects</strong>
+                        <small>Explore service opportunities</small>
+                    </span>
+                </a>
+
+                <% if (user && user.role_name === 'admin') { %>
+                    <a href="/users" class="action-card action-card--highlight">
+                        <span class="action-card__icon">👥</span>
+                        <span>
+                            <strong>Manage Users</strong>
+                            <small>View all registered accounts</small>
+                        </span>
+                    </a>
+                <% } %>
+            </div>
+        </section>
+    </section>
+</main>
+
+<%- include('partials/footer') %>

@@ -39,6 +39,7 @@ import {
     processUserRegistrationForm,
     requireLogin,
     showDashboard,
+    showUsersPage,
     requireRole
 } from './controllers/users.js';
 
@@ -84,5 +85,6 @@ router.get('/logout', processLogout);
 
 // User dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
+router.get('/users', requireRole('admin'), showUsersPage);
 
 export default router;
