@@ -2,7 +2,10 @@ import {
     getUpcomingProjects,
     getProjectDetails,
     createProject,
-    updateProject
+    updateProject,
+    addProjectVolunteer,
+    removeProjectVolunteer,
+    isProjectVolunteer
 } from '../models/projects.js';
 import { getCategoriesForProject } from '../models/categories.js';
 import { getAllOrganizations } from '../models/organizations.js';
@@ -28,8 +31,45 @@ const projectDetailsPage = async (req, res, next) => {
 
     const categories = await getCategoriesForProject(project.project_id);
     const title = project.title;
+    const isVolunteer = req.session.user
+        ? await isProjectVolunteer(req.session.user.user_id, project.project_id)
+        : false;
 
-    res.render('project', { title, project, categories });
+    res.render('project', { title, project, categories, isVolunteer });
+};
+
+const addVolunteerToProject = async (req, res, next) => {
+    try {
+        const project = await getProjectDetails(req.params.id);
+        if (!project) {
+            const error = new Error('Project not found');
+            error.status = 404;
+            return next(error);
+        }
+
+        await addProjectVolunteer(req.session.user.user_id, project.project_id);
+        req.flash('success', 'You are volunteering for this project.');
+        res.redirect(`/project/${project.project_id}`);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const removeVolunteerFromProject = async (req, res, next) => {
+    try {
+        const project = await getProjectDetails(req.params.id);
+        if (!project) {
+            const error = new Error('Project not found');
+            error.status = 404;
+            return next(error);
+        }
+
+        await removeProjectVolunteer(req.session.user.user_id, project.project_id);
+        req.flash('success', 'You are no longer volunteering for this project.');
+        res.redirect(`/project/${project.project_id}`);
+    } catch (error) {
+        next(error);
+    }
 };
 
 const showNewProjectForm = async (req, res) => {
@@ -137,4 +177,14 @@ const processEditProjectForm = async (req, res, next) => {
     }
 };
 
-export { projectsPage, projectDetailsPage, showNewProjectForm, processNewProjectForm, projectValidation, showEditProjectForm, processEditProjectForm };
+export {
+    projectsPage,
+    projectDetailsPage,
+    addVolunteerToProject,
+    removeVolunteerFromProject,
+    showNewProjectForm,
+    processNewProjectForm,
+    projectValidation,
+    showEditProjectForm,
+    processEditProjectForm
+};

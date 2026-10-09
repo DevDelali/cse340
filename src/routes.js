@@ -15,6 +15,8 @@ import {
     projectDetailsPage,
     showNewProjectForm,
     processNewProjectForm,
+    addVolunteerToProject,
+    removeVolunteerFromProject,
     projectValidation,
     showEditProjectForm,
     processEditProjectForm
@@ -39,6 +41,7 @@ import {
     processUserRegistrationForm,
     requireLogin,
     showDashboard,
+    removeVolunteerFromDashboard,
     showUsersPage,
     requireRole
 } from './controllers/users.js';
@@ -62,6 +65,8 @@ router.post('/assign-categories/:projectId', requireRole('admin'), processAssign
 
 router.get('/projects', projectsPage);
 router.get('/project/:id', projectDetailsPage);
+router.post('/project/:id/volunteer', requireLogin, addVolunteerToProject);
+router.post('/project/:id/unvolunteer', requireLogin, removeVolunteerFromProject);
 router.get('/categories', categoriesPage);
 router.get('/category/:id', categoryDetailsPage);
 router.get('/test-error', testErrorPage);
@@ -85,6 +90,7 @@ router.get('/logout', processLogout);
 
 // User dashboard route
 router.get('/dashboard', requireLogin, showDashboard);
+router.post('/dashboard/projects/:projectId/unvolunteer', requireLogin, removeVolunteerFromDashboard);
 router.get('/users', requireRole('admin'), showUsersPage);
 
 export default router;

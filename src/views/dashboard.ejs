@@ -65,6 +65,25 @@
                 <% } %>
             </div>
         </section>
+
+        <section class="dashboard-volunteer-projects" aria-labelledby="volunteer-projects-heading">
+            <h2 id="volunteer-projects-heading">Projects I'm Volunteering For</h2>
+            <% if (volunteerProjects.length) { %>
+                <ul>
+                    <% volunteerProjects.forEach(project => { %>
+                        <li>
+                            <a href="/project/<%= project.project_id %>"><%= project.title %></a>
+                            <span> — <%= project.organization_name %>, <%= new Date(project.project_date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }) %></span>
+                            <form method="post" action="/dashboard/projects/<%= project.project_id %>/unvolunteer">
+                                <button class="btn btn-secondary" type="submit">Remove me as a volunteer</button>
+                            </form>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>You have not signed up to volunteer for any projects yet.</p>
+            <% } %>
+        </section>
     </section>
 </main>
 

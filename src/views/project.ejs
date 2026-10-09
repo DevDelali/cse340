@@ -38,6 +38,21 @@
                 </section>
             <% } %>
 
+            <% if (isLoggedIn) { %>
+                <section class="project-volunteer-actions" aria-label="Volunteer signup">
+                    <% if (isVolunteer) { %>
+                        <p>You are volunteering for this project.</p>
+                        <form method="post" action="/project/<%= project.project_id %>/unvolunteer">
+                            <button class="btn btn-secondary" type="submit">Remove me as a volunteer</button>
+                        </form>
+                    <% } else { %>
+                        <form method="post" action="/project/<%= project.project_id %>/volunteer">
+                            <button class="btn btn-primary" type="submit">Volunteer for this project</button>
+                        </form>
+                    <% } %>
+                </section>
+            <% } %>
+
             <% if (user && user.role_name==='admin' ) { %>
                 <div class="project-detail-actions">
                     <a class="btn btn-secondary" href="/assign-categories/<%= project.project_id %>">Edit categories</a>

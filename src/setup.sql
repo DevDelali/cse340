@@ -137,6 +137,17 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Joining table for users volunteering on service projects
+CREATE TABLE project_volunteers (
+    project_id INTEGER NOT NULL
+        REFERENCES service_projects(project_id)
+        ON DELETE CASCADE,
+    user_id INTEGER NOT NULL
+        REFERENCES users(user_id)
+        ON DELETE CASCADE,
+    PRIMARY KEY (project_id, user_id)
+);
+
 -- Insert the admin testing account required for this assignment
 INSERT INTO users (name, email, password_hash, role_id)
 SELECT 'Admin User', 'admin@example.com', '$2b$10$nszqGowA9ptuCP5y8z.8vOATwkFIosOZxFMDbaMd3UBtInsFp53PG', role_id

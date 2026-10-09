@@ -1112,7 +1112,8 @@ form {
     font-size: 1.4rem;
 }
 
-.dashboard-actions {
+.dashboard-actions,
+.dashboard-volunteer-projects {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 18px;
@@ -1120,9 +1121,40 @@ form {
     padding: 1.5rem;
 }
 
-.dashboard-actions h2 {
+.dashboard-actions h2,
+.dashboard-volunteer-projects h2 {
     margin-top: 0;
     margin-bottom: 1rem;
+}
+
+.dashboard-volunteer-projects {
+    margin-top: var(--space-lg);
+}
+
+.dashboard-volunteer-projects ul {
+    display: grid;
+    gap: var(--space-md);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.dashboard-volunteer-projects li {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.dashboard-volunteer-projects li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.dashboard-volunteer-projects li form {
+    margin-left: auto;
 }
 
 .action-grid {
@@ -1199,7 +1231,8 @@ form {
         padding: 1.2rem;
     }
 
-    .dashboard-actions {
+    .dashboard-actions,
+    .dashboard-volunteer-projects {
         padding: 1.2rem;
     }
 }
@@ -1537,6 +1570,14 @@ footer {
 
 .project-detail-header p {
     margin: 0;
+}
+
+.project-volunteer-actions {
+    margin-top: 1.5rem;
+}
+
+.project-volunteer-actions p {
+    margin: 0 0 0.75rem;
 }
 
 .project-detail-description {
